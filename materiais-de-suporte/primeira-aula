@@ -1,0 +1,14 @@
+Primeira aula
+
+Instalar 
+Bitnami OVA
+Ubuntu VDI
+GNS3 VM
+
+Unzipar todos os arquivos
+
+Abrir Oracle VM Virtual Box
+
+Acrescentar (ou Arquivo > importar apliance) > Procurar arquivo Bitnami > Continuar
+Acrescentar (ou Arquivo > importar apliance) > Procurar arquivo GNSM > Continuar
+Novo > Configurar máquina virtual > Importar disco virtual > Procurar arquivo Ubuntu
