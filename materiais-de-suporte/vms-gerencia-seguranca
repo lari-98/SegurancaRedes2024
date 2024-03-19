@@ -1,0 +1,9 @@
+VMs para Gerência & Segurança
+
+Download and install Zabbix: https://www.zabbix.com/download_appliance
+
+pfSense Community Edition: https://www.pfsense.org/download/
+
+WAZUH Virtual Machine (OVA): https://documentation.wazuh.com/current/deployment-options/virtual-machine/virtual-machine.html
+
+Bitnami Packege for ELK (OVA): https://bitnami.com/stack/elk/virtual-machine
