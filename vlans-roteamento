@@ -1,0 +1,50 @@
+---Atribuir IPs às máquinas virtuais:---
+
+-VPCs:
+ip 172.24.10.1 %exemplo
+ip dns 8.8.8.8
+save
+
+-Bash:
+sudo su
+ip addr add 172.24.10.1/24 dev eth0 %(no kali linux addr = address)
+ip link set eth0 up
+
+
+---Criação de VLAN no switch EXOS:---
+
+create vlan ENE 
+configure vlan ENE tag 10 
+configure vlan ENE add ports 2 
+configure vlan ENE ipaddress 192.168.10.254 %exemplo
+show ipconfig
+enable ports 2 
+save configuration 
+
+--- Para adicionar mais de uma VLAN na mesma porta (EXOS): ---
+configure vlan ENE add ports 1 untagged
+configure vlan PPEE add ports 1 tagged
+
+--- Habilitar roteamento de vlans, direcionando para gateway da vlan no roteador (endereço de IP do roteador exclusivo da VLAN):---
+enable ipforwarding vlan ENE
+configure iproute add default 172.24.10.254 vr "VR-Default"
+
+
+--- Configuração do ROT-ACME: ---
+
+vyos@vyos:~$ configure 
+vyos@vyos:~# set interfaces ethernet eth0 address dhcp 
+vyos@vyos:~# set interfaces ethernet eth1 address 172.24.1.254/24 
+vyos@vyos:~# set interfaces ethernet eth1 vif 10 description 'VLAN 10' 
+vyos@vyos:~# set interfaces ethernet eth1 vif 10 address '172.24.10.254/24' 
+vyos@vyos:~# set interfaces ethernet eth1 vif 20 description 'VLAN 20' 
+vyos@vyos:~# set interfaces ethernet eth1 vif 20 address '172.24.20.254/24' 
+vyos@vyos:~# set protocols static route 0.0.0.0/0 next-hop 192.168.15.1 
+vyos@vyos:~# set nat source rule 100 outbound-interface 'eth0' 
+vyos@vyos:~# set nat source rule 100 source address '172.24.1.0/24' 
+vyos@vyos:~# set nat source rule 100 translation address 'masquerade' 
+vyos@vyos:~# commit 
+vyos@vyos:~# save 
+vyos@vyos:~# exit 
+vyos@vyos:~$ 
+
